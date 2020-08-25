@@ -1,0 +1,26 @@
+### Eclipse ###
+
+### Intellij ###
+## File
+*.iml
+## Folder
+.idea
+out/
+log/
+target/
+
+### Java ###
+
+### NetBeans ###
+
+### VS Code ###
+
+### Gradle ###
+.gradle
+/build/
+/gradle
+/gradlew
+/gradlew.bat
+/settings.gradle
+
+### Maven ###

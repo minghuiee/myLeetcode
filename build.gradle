@@ -1,0 +1,41 @@
+apply plugin: "java"
+apply plugin: 'application'
+
+group 'ForeverWar'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+mainClassName = "com.xxx.gss.goral.bootstarp.EntryPoint"
+
+applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    slf4jVersion = "1.7.21"
+    lombokVersion = "1.18.2"
+    logbackVersion = "1.2.3"
+    lang3Version = "3.11"
+}
+
+dependencies {
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.projectlombok:lombok:$lombokVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile "ch.qos.logback:logback-core:$logbackVersion"
+    compile "org.apache.commons:commons-lang3:$lang3Version"
+}
+
+
+
+
+
+
