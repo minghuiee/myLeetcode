@@ -1,4 +1,4 @@
-package com.xxx.problem.number;
+package com.xxx.problem.number.easy;
 
 import lombok.extern.slf4j.Slf4j;
 
