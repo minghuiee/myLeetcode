@@ -109,14 +109,14 @@ public class ReverseInteger {
      * ex:@Param({"1200","2400","3700"})
      * <p>
      * result:
-     * Benchmark                                             Mode  Cnt    Score                   Error            Units
-     * ReverseInteger.MyState.intToString1     thrpt    20     11160206.695 ±  305356.721  ops/s
-     * ReverseInteger.MyState.intToString2     thrpt    20     11355874.349 ±  171451.976  ops/s
-     * ReverseInteger.MyState.intToString3     thrpt    20     905107.039     ±  20146.709    ops/s
-     * ReverseInteger.MyState.intToString4     thrpt    20     11572038.098 ±  161649.352  ops/s
-     * ReverseInteger.MyState.charToString1  thrpt    20     15258475.505 ±  184038.417  ops/s
-     * ReverseInteger.MyState.charToString2  thrpt    20     15123458.558 ±  226263.252  ops/s
-     * ReverseInteger.MyState.charToString3  thrpt    20     15494289.846 ±  199773.529  ops/s
+     * Benchmark                                                              Mode  Cnt    Score                   Error            Units
+     * ReverseInteger.ReverseIntegerState.intToString1     thrpt    20     11160206.695 ±  305356.721  ops/s
+     * ReverseInteger.ReverseIntegerState.intToString2     thrpt    20     11355874.349 ±  171451.976  ops/s
+     * ReverseInteger.ReverseIntegerState.intToString3     thrpt    20     905107.039     ±  20146.709    ops/s
+     * ReverseInteger.ReverseIntegerState.intToString4     thrpt    20     11572038.098 ±  161649.352  ops/s
+     * ReverseInteger.ReverseIntegerState.charToString1  thrpt    20     15258475.505 ±  184038.417  ops/s
+     * ReverseInteger.ReverseIntegerState.charToString2  thrpt    20     15123458.558 ±  226263.252  ops/s
+     * ReverseInteger.ReverseIntegerState.charToString3  thrpt    20     15494289.846 ±  199773.529  ops/s
      * 4 > 2 > 1 > 3 , 7 > 5 > 6
      * but 4,7 is a little bit faster due to a special optimization in HotSpot JVM,so choose 1,2 or 5,6
      */
@@ -127,7 +127,7 @@ public class ReverseInteger {
     @Measurement(iterations = 20, timeUnit = TimeUnit.MICROSECONDS) //測試輪數
     @Threads(1) //線程數
     @Fork(1) //進程數
-    public static class MyState {
+    public static class ReverseIntegerState {
         public int i;
         public char c;
 
@@ -139,43 +139,43 @@ public class ReverseInteger {
         }
 
         @Benchmark
-        public void intToString1(MyState state, Blackhole blackhole) {
+        public void intToString1(ReverseIntegerState state, Blackhole blackhole) {
             String s = Integer.toString(state.i);
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void intToString2(MyState state, Blackhole blackhole) {
+        public void intToString2(ReverseIntegerState state, Blackhole blackhole) {
             String s = String.valueOf(state.i);
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void intToString3(MyState state, Blackhole blackhole) {
+        public void intToString3(ReverseIntegerState state, Blackhole blackhole) {
             String s = String.format("%d", state.i);
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void intToString4(MyState state, Blackhole blackhole) {
+        public void intToString4(ReverseIntegerState state, Blackhole blackhole) {
             String s = "" + state.i;
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void charToString1(MyState state, Blackhole blackhole) {
+        public void charToString1(ReverseIntegerState state, Blackhole blackhole) {
             String s = Character.toString(state.c);
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void charToString2(MyState state, Blackhole blackhole) {
+        public void charToString2(ReverseIntegerState state, Blackhole blackhole) {
             String s = String.valueOf(state.c);
             blackhole.consume(s);
         }
 
         @Benchmark
-        public void charToString3(MyState state, Blackhole blackhole) {
+        public void charToString3(ReverseIntegerState state, Blackhole blackhole) {
             String s = "" + state.c;
             blackhole.consume(s);
         }
@@ -185,7 +185,7 @@ public class ReverseInteger {
         int x = new ReverseInteger().reverseByMyResult2(-123456789);
         log.info("{}", x);
 //        Options options = new OptionsBuilder()
-//                .include(MyState.class.getSimpleName())
+//                .include(ReverseIntegerState.class.getSimpleName())
 ////                .output("D:/my_all_demo/log/Benchmark.log") //如果輸出文件就不輸出於console
 ////                .shouldFailOnError(true) //隨機錯誤
 //                .shouldDoGC(true) //是否在測試中，啟動JVM垃圾回收機制
