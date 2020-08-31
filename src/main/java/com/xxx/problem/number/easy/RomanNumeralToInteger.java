@@ -3,11 +3,9 @@ package com.xxx.problem.number.easy;
 import lombok.extern.slf4j.Slf4j;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -74,7 +72,7 @@ public class RomanNumeralToInteger {
     @Threads(1) //線程數
     @Fork(1) //進程數
     public static class RomanNumeralToIntegerState {
-        @Param({"MDCXCV","MCMXCIV","LVIII"})
+        @Param({"MDCXCV", "MCMXCIV", "LVIII"})
         public String c;
 
         @Benchmark
@@ -122,9 +120,7 @@ public class RomanNumeralToInteger {
 
     /**
      * memory:42~42.5MB
-     * spped:fast
-     * @param s
-     * @return
+     * speed:fast
      */
     public int romanToIntByMyResult2(String s) {
         int accumulate = 0;
@@ -144,6 +140,79 @@ public class RomanNumeralToInteger {
             prev = current;
         }
         return accumulate + analysis(current);
+    }
+
+    /**
+     * memory:39.3~39.4MB
+     * speed:fast
+     */
+    public int romanToIntByMyResult3(String s) {
+        int accumulate = 0;
+        if (s.contains("IV")) {
+            s = replaceOnce(s, "IV");
+            accumulate += 4;
+        }
+        if (s.contains("IX")) {
+            s = replaceOnce(s, "IX");
+            accumulate += 9;
+        }
+        if (s.contains("XL")) {
+            s = replaceOnce(s, "XL");
+            accumulate += 40;
+        }
+        if (s.contains("XC")) {
+            s = replaceOnce(s, "XC");
+            accumulate += 90;
+        }
+        if (s.contains("CD")) {
+            s = replaceOnce(s, "CD");
+            accumulate += 400;
+        }
+        if (s.contains("CM")) {
+            s = replaceOnce(s, "CM");
+            accumulate += 900;
+        }
+//        for (int i = 0; i < s.length(); i++) {
+//            accumulate += analysis(s.charAt(i));
+//        }
+        //memory:39.8MB
+        //spped:slow
+        //leedcode無此函式:ArrayUtils.toObject(charArray)
+//        accumulate += Arrays.stream(charArrayToCharacterArray(s.toCharArray())).map(this::analysis).reduce(0, Integer::sum);
+        //memory:39.6MB
+        //spped:fast
+        for (char c : s.toCharArray()) {
+            accumulate += analysis(c);
+        }
+        //memory:40.2MB
+        //spped:slow
+//        accumulate += s.chars().map(c -> analysis((char) c)).sum();
+        return accumulate;
+    }
+
+    //羅馬數字組合 searchString只能是IV,IX,XL,XC,CD,CM
+    //假設text,searchString都不為空
+    //假設為單線程
+    private String replaceOnce(String text, String searchString) {
+        int length = text.length();
+//        if (text == null || text.length() == 0 || searchString == null || searchString.length() == 0) {
+//            return text;
+//        }
+        int index = text.indexOf(searchString);
+        if (index == -1) return text;
+        return new StringBuilder(length)
+                .append(text, 0, index)
+                .append(text, index + 2, length)
+                .toString();
+    }
+
+    //假設array不為空
+    private Character[] charArrayToCharacterArray(char[] array) {
+        Character[] result = new Character[array.length];
+        for (int i = 0; i < array.length; i++) {
+            result[i] = array[i];
+        }
+        return result;
     }
 
     public boolean noNeedCalc(char pprev, char prev) {
@@ -282,19 +351,19 @@ public class RomanNumeralToInteger {
         }
     }
 
-    public static void main(String[] args)  throws RunnerException {
+    public static void main(String[] args) throws RunnerException {
         //roman numeral is within the range from 1 to 3999
         //MDCXCV,MCMXCIV,LVIII
-//        int numeral = new RomanNumeralToInteger().romanToIntByMyResult2("LVIII");
-//        log.info("{}", numeral);
+        int numeral = new RomanNumeralToInteger().romanToIntByMyResult3("MCMXCIV");
+        log.info("{}", numeral);
 
-                Options options = new OptionsBuilder()
-                .include(RomanNumeralToIntegerState.class.getSimpleName())
-//                .output("D:/my_all_demo/log/Benchmark.log") //如果輸出文件就不輸出於console
-//                .shouldFailOnError(true) //隨機錯誤
-                .shouldDoGC(true) //是否在測試中，啟動JVM垃圾回收機制
-//                .jvmArgs("-server") //若有JVM 參數可以加入
-                .build();
-        new Runner(options).run();
+//                Options options = new OptionsBuilder()
+//                .include(RomanNumeralToIntegerState.class.getSimpleName())
+////                .output("D:/my_all_demo/log/Benchmark.log") //如果輸出文件就不輸出於console
+////                .shouldFailOnError(true) //隨機錯誤
+//                .shouldDoGC(true) //是否在測試中，啟動JVM垃圾回收機制
+////                .jvmArgs("-server") //若有JVM 參數可以加入
+//                .build();
+//        new Runner(options).run();
     }
 }
