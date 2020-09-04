@@ -21,6 +21,22 @@ public class RemoveElement {
      * Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.
      * Note that the order of those five elements can be arbitrary.
      * It doesn't matter what values are set beyond the returned length.
+     *
+     * example 1 (val = 3)
+     * 3 -> (2) -> 2 -> 3
+     * (2) -> 2 -> (2) -> 3
+     * 2 -> (2) -> 2 -> 3
+     * array[0] ~ array[1] -> [2,2]
+     *
+     * example 2 (val = 2)
+     * (0) -> 1 -> 2 -> 2 -> 3 -> 0 -> 4 -> 2
+     * (0) -> (1) -> 2 -> 2 -> 3 -> 0 -> 4 -> 2
+     * 0 -> (1) -> 2 -> 2 -> (3) -> 0 -> 4 -> 2
+     * 0 -> 1 -> (3) -> 2 -> 3 -> (0) -> 4 -> 2
+     * 0 -> 1 -> 3 -> (0) -> 3 -> 0 -> (4) -> 2
+     * 0 -> 1 -> 3 -> 0 -> (4) -> 0 -> 4 -> 2
+     * array[0] ~ array[4] -> [0,1,3,0,4]
+     *
      */
     public int removeElement(int[] nums, int val) {
         int i = 0;
