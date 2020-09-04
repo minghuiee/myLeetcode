@@ -34,7 +34,7 @@ public class RemoveDuplicatesFromSortedArray {
      *     print(nums[i]);
      * }
      *
-     * 可以將nums的陣列做修改後，取出需要的部分，但陣列只能用一次
+     * 可以將需要的部分，向陣列num[0]集中，然後取出需要的部分，但陣列只能用一次
      * example 1
      * 1 -> 1 -> (2)
      * 1 -> (2) -> 2
