@@ -61,7 +61,9 @@ public class RemoveElement {
 //        if (nums.length == 0) return 0;
         int j = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (val == nums[i]) continue;
+            if (val == nums[i]) {
+                continue;
+            }
             nums[j] = nums[i];
             j++;
         }

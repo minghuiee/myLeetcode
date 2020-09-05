@@ -86,7 +86,9 @@ public class ValidParentheses {
                 list.addFirst(c);
             } else if (c.equals(')') || c.equals(']') || c.equals('}')) {
                 quantity--;
-                if (quantity < 0) return false;
+                if (quantity < 0) {
+                    return false;
+                }
                 Character firstC = list.getFirst();
                 if (firstC.equals('(') && c.equals(')') || firstC.equals('[') && c.equals(']') || firstC.equals('{') && c.equals('}')) {
                     list.removeFirst();

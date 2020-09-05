@@ -18,8 +18,12 @@ public class MergeTwoSortedLists {
      * Output: 1 -> 2 -> 4 -> 5
      */
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null) return l2;
-        if (l2 == null) return l1;
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
         ListNode headNode = l1;
         if (l1.val > l2.val) {
             headNode = l2;
@@ -39,7 +43,9 @@ public class MergeTwoSortedLists {
                     l2 = l2.next;
                     l1.next.next = node;
                     l1 = l1.next;
-                    if (l2 == null) break;
+                    if (l2 == null) {
+                        break;
+                    }
                 }
             }
         }
