@@ -114,7 +114,9 @@ public class RomanNumeralToInteger {
             pprev = prev;
             prev = current;
         }
-        if (noNeedCalc(pprev, prev)) return accumulate;
+        if (noNeedCalc(pprev, prev)) {
+            return accumulate;
+        }
         return accumulate + analysis(current);
     }
 
@@ -132,8 +134,12 @@ public class RomanNumeralToInteger {
             accumulate += analysis(prev, current);
             if (noNeedCalc(prev, current)) {
                 i++;
-                if (i == length) return accumulate;
-                if (i == length - 1) return accumulate + analysis(s.charAt(i));
+                if (i == length) {
+                    return accumulate;
+                }
+                if (i == length - 1) {
+                    return accumulate + analysis(s.charAt(i));
+                }
                 prev = s.charAt(i);
                 continue;
             }
@@ -199,7 +205,9 @@ public class RomanNumeralToInteger {
 //            return text;
 //        }
         int index = text.indexOf(searchString);
-        if (index == -1) return text;
+        if (index == -1) {
+            return text;
+        }
         return new StringBuilder(length)
                 .append(text, 0, index)
                 .append(text, index + 2, length)
@@ -276,8 +284,12 @@ public class RomanNumeralToInteger {
     }
 
     public int V(char current) {
-        if (current == 'I') return 5;
-        if (current == 'V') return 0;
+        if (current == 'I') {
+            return 5;
+        }
+        if (current == 'V') {
+            return 0;
+        }
         return 5;
     }
 

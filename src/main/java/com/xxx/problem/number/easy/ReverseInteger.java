@@ -63,7 +63,9 @@ public class ReverseInteger {
             reverse = reverse * 10 + x % 10;
             x /= 10;
         }
-        if (Math.abs(reverse) > Integer.MAX_VALUE / 10) return 0;
+        if (Math.abs(reverse) > Integer.MAX_VALUE / 10) {
+            return 0;
+        }
         //不會有這個情況
         //if (Math.abs(reverse) == Integer.MAX_VALUE / 10 && x > 7) return 0;
         return reverse * 10 + x;

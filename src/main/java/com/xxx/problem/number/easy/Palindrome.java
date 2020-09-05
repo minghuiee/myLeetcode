@@ -29,7 +29,9 @@ public class Palindrome {
             reverse = reverse * 10 + x % 10;
             x /= 10;
         }
-        if (reverse > Integer.MAX_VALUE / 10) return false;
+        if (reverse > Integer.MAX_VALUE / 10) {
+            return false;
+        }
         return reverse * 10 + x == y;
     }
 

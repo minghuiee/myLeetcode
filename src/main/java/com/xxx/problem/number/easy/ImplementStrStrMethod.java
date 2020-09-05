@@ -27,15 +27,21 @@ public class ImplementStrStrMethod {
 //        if(haystack == null || needle == null) return -1;
         byte[] bytes = haystack.getBytes();
         byte[] bytes2 = needle.getBytes();
-        if (bytes2.length == 0) return 0;
-        if (bytes.length < bytes2.length) return -1;
+        if (bytes2.length == 0) {
+            return 0;
+        }
+        if (bytes.length < bytes2.length) {
+            return -1;
+        }
         int length = bytes.length - bytes2.length;
         byte first = bytes2[0];
         for (int i = 0; i <= length; i++) {
             if (bytes[i] != first) {
                 while (++i <= length && bytes[i] != first) ;
             }
-            if (i > length) return -1;
+            if (i > length) {
+                return -1;
+            }
             int end = bytes2.length - 1;
             for (int j = 0, k = i; j < bytes2.length && bytes[k] == bytes2[j]; j++, k++) {
                 if (j == end) return i;
