@@ -229,6 +229,25 @@ public class RomanNumeralToInteger {
                 (pprev == 'C' && (prev == 'D' || prev == 'M'));
     }
 
+    public int romanToInt3(String s) {
+        int res = 0;
+        int length = s.length();
+        int current = analysis(s.charAt(0));
+        int next = 0;
+        for (int i = 0; i < length; i++) {
+            if(i + 1 < length) {
+                next = analysis(s.charAt(i + 1));
+            }
+            if (current < next) {
+                res = res - current;
+            } else {
+                res = res + current;
+            }
+            current = next;
+        }
+        return res;
+    }
+
     public int analysis(char current) {
         switch (current) {
             case 'I':
@@ -366,8 +385,10 @@ public class RomanNumeralToInteger {
     public static void main(String[] args) throws RunnerException {
         //roman numeral is within the range from 1 to 3999
         //MDCXCV,MCMXCIV,LVIII
-        int numeral = new RomanNumeralToInteger().romanToIntByMyResult3("MCMXCIV");
-        log.info("{}", numeral);
+//        int numeral = new RomanNumeralToInteger().romanToIntByMyResult3("MCMXCIV");
+        int numeral2 =new RomanNumeralToInteger().romanToInt3("MCMXCIV");
+//        log.info("{}", numeral);
+        log.info("{}", numeral2);
 
 //                Options options = new OptionsBuilder()
 //                .include(RomanNumeralToIntegerState.class.getSimpleName())
