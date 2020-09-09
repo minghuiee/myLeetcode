@@ -53,8 +53,22 @@ public class MergeTwoSortedLists {
     }
 
     /**
-     * Input: 1->2->4, 1->3->4
-     *
+     * Input: 5 -> 6 -> 7, 1 -> 2 -> 4 -> 9
+     * node1: 5 -> 6 -> 7  ,node2.next: 2 -> 4 -> 9
+     * node1: 5 -> 6 -> 7  ,node2.next.next: 4 -> 9
+     * node1: 5 -> 6 -> 7  ,node2.next.next.next: 9
+     * node1.next: 6 -> 7 ,node2.next.next.next: 9
+     * node1.next.next: 7 ,node2.next.next.next: 9
+     * node1:next.next.next: null ,node2.next.next.next: 9
+     * node1:next.next.next: 9 ,node2.next.next.next: 9
+     * node1:next.next: 7 -> 9 ,node2.next.next.next: 9
+     * node1:next: 6 -> 7 -> 9 ,node2.next.next.next: 9
+     * node1: 5 -> 6 -> 7 -> 9 ,node2.next.next.next: 9
+     * node1: 5 -> 6 -> 7 -> 9 ,node2.next.next.next: 5 -> 6 -> 7 -> 9
+     * node1: 5 -> 6 -> 7 -> 9 ,node2.next.next: 4 -> 5 -> 6 -> 7 -> 9
+     * node1: 5 -> 6 -> 7 -> 9 ,node2.next: 2 -> 4 -> 5 -> 6 -> 7 -> 9
+     * node1: 5 -> 6 -> 7 -> 9 ,node2: 1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 9
+     * return node2
      */
     public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
         if (l1 == null) {

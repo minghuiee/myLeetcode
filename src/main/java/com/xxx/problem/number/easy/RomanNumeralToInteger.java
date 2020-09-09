@@ -5,7 +5,6 @@ import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.RunnerException;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,13 +76,13 @@ public class RomanNumeralToInteger {
 
         @Benchmark
         public void romanToInt1(RomanNumeralToIntegerState state, Blackhole blackhole) {
-            int result = new RomanNumeralToInteger().romanToIntByMyResult(state.c);
+            int result = new RomanNumeralToInteger().romanToInt1(state.c);
             blackhole.consume(result);
         }
 
         @Benchmark
         public void romanToInt2(RomanNumeralToIntegerState state, Blackhole blackhole) {
-            int result = new RomanNumeralToInteger().romanToIntByMyResult2(state.c);
+            int result = new RomanNumeralToInteger().romanToInt2(state.c);
             blackhole.consume(result);
         }
     }
@@ -93,7 +92,7 @@ public class RomanNumeralToInteger {
      * memory:39.5~39.6MB
      * speed:slow
      */
-    public int romanToIntByMyResult(String s) {
+    public int romanToInt1(String s) {
 //        if (s == null) return 0;
         int accumulate = 0;
 //        int repeat = 0;
@@ -124,7 +123,7 @@ public class RomanNumeralToInteger {
      * memory:42~42.5MB
      * speed:fast
      */
-    public int romanToIntByMyResult2(String s) {
+    public int romanToInt2(String s) {
         int accumulate = 0;
         char current = s.charAt(0);
         char prev = current;
@@ -152,7 +151,7 @@ public class RomanNumeralToInteger {
      * memory:39.3~39.4MB
      * speed:fast
      */
-    public int romanToIntByMyResult3(String s) {
+    public int romanToInt3(String s) {
         int accumulate = 0;
         if (s.contains("IV")) {
             s = replaceOnce(s, "IV");
@@ -196,6 +195,25 @@ public class RomanNumeralToInteger {
         return accumulate;
     }
 
+    public int romanToInt4(String s) {
+        int res = 0;
+        int length = s.length();
+        int current = analysis(s.charAt(0));
+        int next = 0;
+        for (int i = 0; i < length; i++) {
+            if(i + 1 < length) {
+                next = analysis(s.charAt(i + 1));
+            }
+            if (current < next) {
+                res = res - current;
+            } else {
+                res = res + current;
+            }
+            current = next;
+        }
+        return res;
+    }
+
     //羅馬數字組合 searchString只能是IV,IX,XL,XC,CD,CM
     //假設text,searchString都不為空
     //假設為單線程
@@ -227,25 +245,6 @@ public class RomanNumeralToInteger {
         return (pprev == 'I' && (prev == 'V' || prev == 'X')) ||
                 (pprev == 'X' && (prev == 'L' || prev == 'C')) ||
                 (pprev == 'C' && (prev == 'D' || prev == 'M'));
-    }
-
-    public int romanToInt3(String s) {
-        int res = 0;
-        int length = s.length();
-        int current = analysis(s.charAt(0));
-        int next = 0;
-        for (int i = 0; i < length; i++) {
-            if(i + 1 < length) {
-                next = analysis(s.charAt(i + 1));
-            }
-            if (current < next) {
-                res = res - current;
-            } else {
-                res = res + current;
-            }
-            current = next;
-        }
-        return res;
     }
 
     public int analysis(char current) {
@@ -385,9 +384,9 @@ public class RomanNumeralToInteger {
     public static void main(String[] args) throws RunnerException {
         //roman numeral is within the range from 1 to 3999
         //MDCXCV,MCMXCIV,LVIII
-//        int numeral = new RomanNumeralToInteger().romanToIntByMyResult3("MCMXCIV");
-        int numeral2 =new RomanNumeralToInteger().romanToInt3("MCMXCIV");
-//        log.info("{}", numeral);
+        int numeral = new RomanNumeralToInteger().romanToInt3("MCMXCIV");
+        int numeral2 =new RomanNumeralToInteger().romanToInt4("MCMXCIV");
+        log.info("{}", numeral);
         log.info("{}", numeral2);
 
 //                Options options = new OptionsBuilder()

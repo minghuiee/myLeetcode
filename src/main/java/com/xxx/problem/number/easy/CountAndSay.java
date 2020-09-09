@@ -34,7 +34,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CountAndSay {
 
-    //失敗,int無法處理數字大的 1 < n <= 30
+    /**
+     * 失敗,int無法處理數字大的 1 < n <= 30
+    */
     private int countAndSayAlgorithm2(int number, int n) {
         if (1 < n) {
             int numNumber = 0;
@@ -61,6 +63,9 @@ public class CountAndSay {
         }
     }
 
+    /**
+     * recursive loop (在java中 盡量不使用)
+    */
     private String countAndSayAlgorithm3(String result, int n) {
         if (1 < n) {
             char prev;
@@ -85,6 +90,9 @@ public class CountAndSay {
         }
     }
 
+    /**
+     * a loop (目前java之中 此方法速度較優)
+     */
     public String countAndSayAlgorithm4(int n) {
         String result = "1";
         char prev;
@@ -118,6 +126,9 @@ public class CountAndSay {
         return num;
     }
 
+    /**
+     * 將宣告放在迴圈內 速度較為慢
+     */
     private String countAndSayAlgorithm5(String n) {
         int count = 0;
         StringBuilder sb = new StringBuilder();
@@ -144,7 +155,9 @@ public class CountAndSay {
      * CountAndSay.CountAndSayState.countAndSay4  thrpt    20    2369816.837 ±   36893.422    ops/s
      * CountAndSay.CountAndSayState.countAndSay5  thrpt    20    1934769.135 ±   6818.865      ops/s
      *
-     *
+     * 在java中，recursive loop速度較慢
+     * leetcode server 顯示 recursive loop 速度快佔記憶體少
+     * 由此可知遞歸在某個程式語言(java不適用)速度為最快 記憶體最少 因此leetcode盡量使用遞歸方法
      *
      */
     @State(Scope.Thread)
@@ -159,14 +172,14 @@ public class CountAndSay {
 
         @Setup(Level.Invocation)
         public void doSetup() {
-            n = 6;
+            n = 50;
         }
 
-//        @Benchmark
-//        public void countAndSay2(CountAndSayState state, Blackhole blackhole) {
-//            String s = String.valueOf(countAndSay.countAndSayAlgorithm2( 1, state.n));
-//            blackhole.consume(s);
-//        }
+        @Benchmark
+        public void countAndSay2(CountAndSayState state, Blackhole blackhole) {
+            String s = String.valueOf(countAndSay.countAndSayAlgorithm2( 1, state.n));
+            blackhole.consume(s);
+        }
 
         @Benchmark
         public void countAndSay3(CountAndSayState state, Blackhole blackhole) {
@@ -189,14 +202,14 @@ public class CountAndSay {
     }
 
     public static void main(String[] args) throws RunnerException {
-//        String s3 = new CountAndSay().countAndSayAlgorithm3("1",7);
-//        String s2 = String.valueOf(new CountAndSay().countAndSayAlgorithm2(1,7));
-//        String s4 = new CountAndSay().countAndSayAlgorithm4(7);
-//        String s5 = new CountAndSay().countAndSay5(7);
-//        log.info(s2);
-//        log.info(s3);
-//        log.info(s4);
-//        log.info(s5);
+        String s3 = new CountAndSay().countAndSayAlgorithm3("1",7);
+        String s2 = String.valueOf(new CountAndSay().countAndSayAlgorithm2(1,7));
+        String s4 = new CountAndSay().countAndSayAlgorithm4(7);
+        String s5 = new CountAndSay().countAndSay5(7);
+        log.info(s2);
+        log.info(s3);
+        log.info(s4);
+        log.info(s5);
         Options options = new OptionsBuilder()
                 .include(CountAndSayState.class.getSimpleName())
                 .shouldDoGC(true)
